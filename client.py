@@ -19,10 +19,14 @@ class Client:
         self.rate = 44100 #Set the sample rate
         self.chunk = 1024 #Set the chunk size (number of frames to buffer)
 
-
-
     def send_audio(self):
         stream = self.audio.open(format=self.format, channels=self.channels, rate=self.rate, input=True, frames_per_buffer=self.chunk)
+        
+        self.client.send(frequency.encode('utf-8'))
+        print(f"Sent data (frequency): {frequency.encode('utf-8')}")
+        self.client.send(username.encode('utf-8'))
+        print(f"Sent data (username): {username.encode('utf-8')}")
+
         while True:
             data = stream.read(self.chunk)
             self.client.send(data)
