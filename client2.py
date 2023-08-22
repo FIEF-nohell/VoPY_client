@@ -21,7 +21,7 @@ class Client:
 
     def send_audio(self):
         stream = self.audio.open(format=self.format, channels=self.channels, rate=self.rate, input=True, frames_per_buffer=self.chunk)
-
+        
         self.client.send(frequency.encode('utf-8'))
         self.client.send(username.encode('utf-8'))
 
