@@ -1,6 +1,6 @@
-import socket
-import pyaudio
 from threading import Thread
+import pyaudio
+import socket
 
 class Client:
     def __init__(self, host, port, username):
@@ -35,5 +35,8 @@ class Client:
 
 if __name__ == "__main__":
     username = input("Enter your username: ")
-    client = Client("127.0.0.1", 12345, username)
+    ip = input("Enter the target ip: ")
+    port = input("Enter the target port (default 12345): ")
+    if port == "": port = 12345
+    client = Client(str(ip), port, username)
     client.run()
