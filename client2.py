@@ -5,25 +5,22 @@ import socket
 class Client:
     def __init__(self, host, port, username, frequency):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect((host, port))  #Establish connection
+        self.client.connect((host, port))               #Establish connection
         
-        self.client.send(frequency.encode('utf-8')) #Send frequency
-        self.client.send(username.encode('utf-8')) #Send username
+        self.client.send(frequency.encode('utf-8'))     #Send frequency
+        self.client.send(username.encode('utf-8'))      #Send username
 
-        self.username = username.encode('utf-8') #Encode and assign username
-        self.frequency = frequency.encode('utf-8') #Encode and assign frequency
+        self.frequency = frequency.encode('utf-8')      #Encode and assign frequency
+        self.username = username.encode('utf-8')        #Encode and assign username
         
-        self.audio = pyaudio.PyAudio() #Initialize the PyAudio object for audio streaming
-        self.format = pyaudio.paInt16 #Set the audio format to 16-bit integer
-        self.channels = 1 #Set the audio channels to mono
-        self.rate = 44100 #Set the sample rate
-        self.chunk = 1024 #Set the chunk size (number of frames to buffer)
+        self.audio = pyaudio.PyAudio()                  #Initialize the PyAudio object for audio streaming
+        self.format = pyaudio.paInt16                   #Set the audio format to 16-bit integer
+        self.channels = 1                               #Set the audio channels to mono
+        self.rate = 44100                               #Set the sample rate
+        self.chunk = 1024                               #Set the chunk size (number of frames to buffer)
 
     def send_audio(self):
         stream = self.audio.open(format=self.format, channels=self.channels, rate=self.rate, input=True, frames_per_buffer=self.chunk)
-        
-        self.client.send(frequency.encode('utf-8'))
-        self.client.send(username.encode('utf-8'))
 
         while True:
             data = stream.read(self.chunk)
