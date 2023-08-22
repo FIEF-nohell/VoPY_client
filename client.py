@@ -1,6 +1,7 @@
 from threading import Thread
 import pyaudio
 import socket
+import time
 
 class Client:
     def __init__(self, host, port, username, frequency):
@@ -8,6 +9,7 @@ class Client:
         self.client.connect((host, port))               #Establish connection
         
         self.client.send(frequency.encode('utf-8'))     #Send frequency
+        time.sleep(0.1)                                 #Slight delay to allow the server to receive in the correct order
         self.client.send(username.encode('utf-8'))      #Send username
 
         self.frequency = frequency.encode('utf-8')      #Encode and assign frequency
@@ -47,5 +49,5 @@ if __name__ == "__main__":
     while frequency not in [str(i) for i in range(1, 10)]:
         print("Invalid choice. Please choose a frequency between 1 and 9.")
         frequency = input("Choose a frequency (1-9): ")
-    client = Client(str(ip), port, username, frequency)
+    client = Client(str(ip), int(port), username, frequency)
     client.run()
